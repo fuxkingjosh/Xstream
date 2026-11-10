@@ -4,7 +4,7 @@ libdir=${prefix}/lib
 includedir=${prefix}/include
 
 Name: libobs
-Description: OBS Studio core compositor library
+Description: XStream core compositor library (libobs, from OBS Studio)
 Version: @OBS_VERSION_CANONICAL@
 
 Requires:

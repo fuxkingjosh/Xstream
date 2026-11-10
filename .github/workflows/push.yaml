@@ -149,7 +149,7 @@ jobs:
 
   create-release:
     name: Create Release 🛫
-    if: github.ref_type == 'tag'
+    if: github.repository_owner == 'obsproject' && github.ref_type == 'tag'
     runs-on: ubuntu-26.04
     needs: [build-project, sign-windows-build]
     defaults:

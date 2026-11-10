@@ -1,8 +1,8 @@
 [Desktop Entry]
 Version=1.0
-Name=OBS Studio
+Name=XStream
 GenericName=Streaming/Recording Software
-Comment=Free and Open Source Streaming/Recording Software
+Comment=Free and open source streaming and recording. Based on OBS Studio.
 Exec=obs
 Icon=com.obsproject.Studio
 Terminal=false

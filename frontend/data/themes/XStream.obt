@@ -1,0 +1,270 @@
+/* ------------------------------------------------------------------------- *
+ * XStream XMB                                                              *
+ *                                                                           *
+ * Base theme for the XStream fork. Extends Yami so widget rules stay in    *
+ * sync with OBS Studio, then retints the palette and adds XMB polish.      *
+ * Accent variants live in XStream_Cyan.ovt, XStream_Magenta.ovt, and       *
+ * XStream_Lime.ovt.                                                        *
+ *                                                                           *
+ * GPL-2.0-or-later. The Yami theme this extends is by Warchamp7.            *
+ * ------------------------------------------------------------------------- */
+
+@OBSThemeMeta {
+    name: 'XStream XMB';
+    id: 'com.xstream.XMB';
+    extends: 'com.obsproject.Yami';
+    author: 'XStream';
+    dark: 'true';
+}
+
+@OBSThemeVars {
+    /* Navy / violet surfaces. Primary text is off-white; muted text stays
+     * above WCAG AA on these backgrounds. */
+    --grey1: #7E78A4;
+    --grey2: #645E88;
+    --grey3: #4C466E;
+    --grey4: #3A3458;
+    --grey5: #2E2948;
+    --grey6: #221E3A;
+    --grey7: #161228;
+    --grey8: #0C0A18;
+
+    --white1: #F7F4FF;
+    --white2: #E6E0F6;
+    --white3: #D5CBEF;
+    --white4: #C4B8E4;
+    --white5: #D5CBEF;
+
+    --bg_window: #121028;
+    --bg_base: #1C1836;
+    --bg_preview: #0A0816;
+
+    --text: #F7F4FF;
+    --text_light: #F7F4FF;
+    --text_muted: #D5CBEF;
+
+    /* Default accent is electric cyan. Variants override these. */
+    --blue1: #D9FBFF;
+    --blue2: #3DE9FF;
+    --blue3: #0C6A84;
+    --blue4: #0A5870;
+    --blue5: #08475C;
+    --blue6: #063646;
+
+    --primary: #0C6A84;
+    --primary_light: #0E7494;
+    --primary_lighter: #7AF4FF;
+    --primary_dark: #0A5870;
+    --primary_darker: #08475C;
+
+    --panel_border: #2C5A72;
+    --live_red: #C81E3A;
+    --live_red_border: #FF6B86;
+
+    --border_radius: 8px;
+    --border_radius_small: 5px;
+    --border_radius_large: 12px;
+
+    --scrollbar_handle: #4C466E;
+    --scrollbar_hover: #645E88;
+    --scrollbar_down: #0E7494;
+    --scrollbar_bg: #161228;
+    --scrollbar_border: #7AF4FF;
+
+    --list_item_bg_selected: #0C6A84;
+    --list_item_bg_hover: #4C466E;
+    --highlight_color: #7AF4FF;
+    --input_border_focus: #7AF4FF;
+    --button_border_hover: #7AF4FF;
+    --tab_border_focus: #7AF4FF;
+}
+
+/* Window wash: deep navy into violet, XMB style. */
+QMainWindow {
+    background-color: #121028;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #101428, stop:0.55 #17122E, stop:1 #241438);
+}
+
+#centralwidget {
+    background: transparent;
+}
+
+OBSDock,
+QDockWidget {
+    background-color: #1C1836;
+    border: 1px solid var(--panel_border);
+    border-radius: 12px;
+}
+
+QDockWidget::title {
+    background: transparent;
+    padding: 4px;
+}
+
+/* Hover and focus "pop": brighter fill plus a neon edge. Qt stylesheets
+ * cannot scale a widget, so the glow is the border and background. */
+QPushButton:hover,
+QPushButton:focus,
+QToolButton:hover,
+QToolButton:focus,
+.btn-tool:hover,
+.btn-tool:focus {
+    background-color: #4C466E;
+    border: 1px solid var(--primary_lighter);
+    color: #F7F4FF;
+}
+
+QPushButton:checked,
+QToolButton:checked,
+.btn-tool:checked {
+    background-color: var(--primary);
+    border: 1px solid var(--primary_lighter);
+    color: #F7F4FF;
+}
+
+QPushButton:checked:hover,
+QPushButton:checked:focus,
+QToolButton:checked:hover,
+QToolButton:checked:focus {
+    background-color: var(--primary_light);
+    border: 1px solid var(--primary_lighter);
+    color: #F7F4FF;
+}
+
+QLineEdit:focus,
+QComboBox:focus,
+QSpinBox:focus,
+QDoubleSpinBox:focus,
+QPlainTextEdit:focus,
+QTextEdit:focus,
+QListWidget:focus,
+QTreeView:focus,
+QTableView:focus {
+    border: 1px solid var(--primary_lighter);
+}
+
+/* Scene and source lists. */
+QListView::item:selected,
+QListWidget::item:selected,
+QMenu::item:selected,
+#scenes::item:selected {
+    background-color: var(--primary);
+    color: #F7F4FF;
+    border: 1px solid var(--primary_lighter);
+}
+
+QListView::item:hover,
+QListWidget::item:hover,
+QMenu::item:hover,
+#scenes::item:hover {
+    background-color: #322C52;
+    color: #F7F4FF;
+    border: 1px solid var(--primary_lighter);
+}
+
+QListView::item:selected:hover,
+QListWidget::item:selected:hover,
+#scenes::item:selected:hover {
+    background-color: var(--primary_light);
+    color: #F7F4FF;
+    border: 1px solid var(--primary_lighter);
+}
+
+SourceTreeItem {
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+/* Start Streaming / Start Recording glow red while active. */
+#streamButton:!hover:!pressed.state-active,
+#recordButton:!hover:!pressed.state-active,
+#streamButton.state-active,
+#recordButton.state-active {
+    background: #C81E3A;
+    background-color: #C81E3A;
+    color: #FFF7F8;
+    border: 1px solid #FF6B86;
+}
+
+#streamButton:hover:!pressed.state-active,
+#recordButton:hover:!pressed.state-active,
+#streamButton.state-active:hover,
+#recordButton.state-active:hover {
+    background: #A81830;
+    background-color: #A81830;
+    color: #FFFFFF;
+    border: 1px solid #FF8DA0;
+}
+
+/* Scrollbars */
+QScrollBar {
+    background-color: #161228;
+    border: none;
+    border-radius: 6px;
+}
+
+QScrollBar::handle {
+    background-color: #4C466E;
+    border: 1px solid #5A5478;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+QScrollBar::handle:hover {
+    background-color: #645E88;
+    border: 1px solid var(--primary_lighter);
+}
+
+QScrollBar::handle:pressed {
+    background-color: var(--primary);
+    border: 1px solid var(--primary_lighter);
+}
+
+/* Sliders */
+QSlider::groove:horizontal {
+    height: 6px;
+    background-color: #2A2644;
+    border-radius: 3px;
+}
+
+QSlider::groove:vertical {
+    width: 6px;
+    background-color: #2A2644;
+    border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal,
+QSlider::add-page:vertical {
+    background-color: var(--blue2);
+    border-radius: 3px;
+}
+
+QSlider::handle {
+    background-color: #F7F4FF;
+    border: 2px solid var(--blue2);
+    border-radius: 7px;
+}
+
+QSlider::handle:horizontal {
+    width: 14px;
+    height: 14px;
+    margin: -5px 0;
+}
+
+QSlider::handle:vertical {
+    width: 14px;
+    height: 14px;
+    margin: 0 -5px;
+}
+
+QSlider::handle:hover,
+QSlider::handle:pressed {
+    background-color: var(--primary_lighter);
+    border: 2px solid #F7F4FF;
+}
+
+QStatusBar {
+    background: transparent;
+    color: #D5CBEF;
+}

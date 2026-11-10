@@ -1,0 +1,23 @@
+/* Default XStream XMB accent: electric cyan. */
+
+@OBSThemeMeta {
+    name: 'Cyan';
+    id: 'com.xstream.XMB.Cyan';
+    extends: 'com.xstream.XMB';
+    author: 'XStream';
+    dark: 'true';
+}
+
+@OBSThemeVars {
+    --blue1: #D9FBFF;
+    --blue2: #3DE9FF;
+    --blue3: #0C6A84;
+    --primary: #0C6A84;
+    --primary_light: #0E7494;
+    --primary_lighter: #7AF4FF;
+    --primary_dark: #0A5870;
+    --primary_darker: #08475C;
+    --panel_border: #2C5A72;
+    --scrollbar_border: #7AF4FF;
+    --highlight_color: #7AF4FF;
+}
