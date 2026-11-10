@@ -44,12 +44,19 @@ endif()
 set(OBS_COMPANY_NAME "XStream")
 set(OBS_PRODUCT_NAME "XStream")
 set(OBS_WEBSITE "https://www.obsproject.com")
-set(OBS_COMMENTS "Free and open source software for video recording and live streaming. Based on OBS Studio by the OBS Project.")
+set(
+  OBS_COMMENTS
+  "Free and open source software for video recording and live streaming. Based on OBS Studio by the OBS Project."
+)
 set(OBS_LEGAL_COPYRIGHT "(C) Lain Bailey")
 set(OBS_CMAKE_VERSION 3.0.0)
 
-# Configure default version strings
-set(_obs_default_version "0" "0" "1")
+# Configure default version strings. base-version.txt is the upstream OBS
+# Studio release this tree is based on. A fork checkout has no OBS version
+# tags, so git describe cannot produce MAJOR.MINOR.PATCH on its own.
+file(STRINGS "${CMAKE_CURRENT_LIST_DIR}/base-version.txt" _obs_base_version_line LIMIT_COUNT 1)
+string(STRIP "${_obs_base_version_line}" _obs_base_version_line)
+string(REPLACE "." ";" _obs_default_version "${_obs_base_version_line}")
 set(_obs_release_candidate 0)
 set(_obs_beta 0)
 

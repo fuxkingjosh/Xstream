@@ -11,6 +11,15 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES "Windows")
   endif()
 endif()
 
+# obs-browser defaults ENABLE_BROWSER to OFF and then never registers
+# browser_source. Scenes saved in OBS show those sources with red names and a
+# generic icon. On Windows, turn the module on unless the user opted out, so
+# dependency setup downloads CEF and the build actually contains it. The
+# Windows presets already set this; a plain cmake configure did not.
+if(OS_WINDOWS AND NOT DEFINED ENABLE_BROWSER)
+  set(ENABLE_BROWSER ON CACHE BOOL "Enable browser sources (requires CEF)")
+endif()
+
 include(compilerconfig)
 include(defaults)
 include(helpers)

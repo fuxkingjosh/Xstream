@@ -16,12 +16,26 @@ if(NOT DEFINED OBS_VERSION_OVERRIDE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 
-  if(_git_describe_err)
+  # git describe writes a fatal message to stderr when it fails. A successful
+  # --always describe on a clone with no tags only prints the commit id.
+  if(NOT _obs_version_result EQUAL 0 AND _git_describe_err)
     message(FATAL_ERROR "Could not fetch OBS version tag from git.\n" ${_git_describe_err})
   endif()
 
-  if(_obs_version_result EQUAL 0)
-    string(REGEX REPLACE "([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1;\\2;\\3" _obs_version_canonical ${_obs_version})
+  if(_obs_version_result EQUAL 0 AND _obs_version MATCHES "^([0-9]+)\\.([0-9]+)\\.([0-9]+)")
+    string(REGEX REPLACE "^([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1;\\2;\\3" _obs_version_canonical "${_obs_version}")
+  else()
+    # Forks do not have the OBS version tags, and CI does not fetch tags.
+    # git describe --always then returns the commit id, which project(VERSION)
+    # rejects. Keep the upstream version from base-version.txt.
+    string(REPLACE ";" "." _obs_base_version "${_obs_default_version}")
+    if(_obs_version_result EQUAL 0 AND _obs_version MATCHES "^([0-9a-fA-F]+)(-modified)?$")
+      set(_obs_version "${_obs_base_version}-g${CMAKE_MATCH_1}${CMAKE_MATCH_2}")
+    else()
+      set(_obs_version "${_obs_base_version}")
+    endif()
+    set(_obs_version_canonical ${_obs_default_version})
+    message(STATUS "XStream: no version tag in this clone; OBS_VERSION is ${_obs_version}")
   endif()
 elseif(DEFINED OBS_VERSION_OVERRIDE)
   if(OBS_VERSION_OVERRIDE MATCHES "([0-9]+)\\.([0-9]+)\\.([0-9]+).*")

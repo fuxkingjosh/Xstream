@@ -44,7 +44,28 @@ function Package {
 
     Install-BuildDependencies -WingetFile "${ScriptHome}/.Wingetfile"
 
-    $GitDescription = Invoke-External git describe --tags --long
+    # Forks have no OBS version tags. git describe --tags --long then fails,
+    # which used to abort packaging after CMake had already been fixed to
+    # fall back to cmake/common/base-version.txt.
+    $BaseVersion = (Get-Content -Path "$ProjectRoot/cmake/common/base-version.txt" -TotalCount 1).Trim()
+    $GitDescription = $null
+    try {
+        $GitDescription = (& git describe --tags --long 2>$null | Select-Object -Last 1)
+    } catch {
+        $GitDescription = $null
+    }
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($GitDescription) -or $GitDescription -notmatch '^\d+\.\d+\.\d+-') {
+        $ShortSha = $null
+        try {
+            $ShortSha = (& git rev-parse --short=9 HEAD).Trim()
+        } catch {
+            $ShortSha = $null
+        }
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($ShortSha)) {
+            throw "Unable to determine a package version from git."
+        }
+        $GitDescription = "$BaseVersion-1-g$ShortSha"
+    }
     $Tokens = ($GitDescription -split '-')
     $CommitVersion = $Tokens[0..$($Tokens.Count - 3)] -join '-'
     $CommitHash = $($Tokens[-1]).SubString(1)
