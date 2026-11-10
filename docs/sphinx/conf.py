@@ -56,7 +56,7 @@ primary_domain = 'c'
 master_doc = 'index'
 
 # General information about the project.
-project = 'OBS Studio'
+project = 'XStream'
 copyright = '2017-2022, Lain Bailey'
 author = 'Lain Bailey'
 

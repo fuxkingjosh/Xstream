@@ -1,0 +1,31 @@
+/* XStream XMB accent: magenta. */
+
+@OBSThemeMeta {
+    name: 'Magenta';
+    id: 'com.xstream.XMB.Magenta';
+    extends: 'com.xstream.XMB';
+    author: 'XStream';
+    dark: 'true';
+}
+
+@OBSThemeVars {
+    --blue1: #FFD6F6;
+    --blue2: #FF4FD8;
+    --blue3: #9D2068;
+    --blue4: #831A56;
+    --blue5: #681444;
+    --blue6: #4C0E32;
+    --primary: #9D2068;
+    --primary_light: #B02878;
+    --primary_lighter: #FF8AE4;
+    --primary_dark: #831A56;
+    --primary_darker: #681444;
+    --panel_border: #6A3058;
+    --scrollbar_border: #FF8AE4;
+    --scrollbar_down: #B02878;
+    --highlight_color: #FF8AE4;
+    --input_border_focus: #FF8AE4;
+    --button_border_hover: #FF8AE4;
+    --tab_border_focus: #FF8AE4;
+    --list_item_bg_selected: #9D2068;
+}

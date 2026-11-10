@@ -5,8 +5,11 @@
 
 .. _contents:
 
-Welcome to OBS Studio's documentation!
-======================================
+Welcome to XStream's documentation!
+===================================
+
+XStream is based on OBS Studio by the OBS Project. API names in these docs
+still say OBS because the plugin API is unchanged.
 
 * **Setting up an OBS development environment?** :wiki:`Use the Wiki <Install-Instructions>`
 * **Developing your first OBS plugin?** `Use the obs-plugintemplate <https://github.com/obsproject/obs-plugintemplate#obs-plugin-template>`_

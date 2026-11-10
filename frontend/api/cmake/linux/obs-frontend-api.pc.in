@@ -4,7 +4,7 @@ libdir=${prefix}/lib
 includedir=${prefix}/include
 
 Name: obs-frontend-api
-Description: OBS Studio frontend API library
+Description: XStream frontend API library (OBS Studio plugin API)
 Version: @OBS_VERSION_CANONICAL@
 
 Requires:

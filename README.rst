@@ -1,3 +1,11 @@
+XStream
+=======
+
+XStream is a personal fork of OBS Studio for video recording and live streaming.
+It keeps the OBS Studio plugin API, libraries, and file formats, and it is
+distributed under the GNU General Public License v2 (or any later version).
+Based on OBS Studio by the OBS Project.
+
 OBS Studio <https://obsproject.com>
 ===================================
 
