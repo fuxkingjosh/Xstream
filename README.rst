@@ -6,6 +6,35 @@ It keeps the OBS Studio plugin API, libraries, and file formats, and it is
 distributed under the GNU General Public License v2 (or any later version).
 Based on OBS Studio by the OBS Project.
 
+Browser sources and OBS plugins
+-------------------------------
+
+Browser sources (the globe icon: GIF overlays, webcam frames, name cards)
+come from the obs-browser module and Chromium Embedded Framework. They are
+part of a Windows build. A build configured without that module still opens
+a scene collection, but those sources show red names and a generic icon and
+do not render. CI and a normal Windows configure both enable the module.
+Rebuild, or download the Windows zip from the workflow run, and run
+``bin/64bit/obs64.exe``. The window title says XStream. Replacing only the
+source tree does not update a build that was compiled without obs-browser.
+
+XStream still stores its config in the ``obs-studio`` folder and loads
+third-party plugins from the same places as OBS Studio:
+
+- Recommended: ``C:\ProgramData\obs-studio\plugins\<name>\<name>.dll`` with a
+  ``data`` folder beside the DLL.
+- Legacy, next to a normal OBS Studio install:
+  ``C:\Program Files\obs-studio\obs-plugins\64bit\<name>.dll`` and
+  ``C:\Program Files\obs-studio\data\obs-plugins\<name>\``.
+  Plugins such as Aitum Multistream that the OBS installer put there are
+  loaded as well. XStream does not load OBS's own ``core`` modules from that
+  install; browser support has to be the copy shipped with XStream, because
+  that copy is built against this tree and includes CEF.
+
+If a plugin does not show up, copy it into the ProgramData layout above or
+set ``OBS_PLUGINS_PATH`` to a directory of ``<name>\<name>.dll`` folders.
+Portable mode skips ProgramData and still checks the OBS Studio install.
+
 OBS Studio <https://obsproject.com>
 ===================================
 

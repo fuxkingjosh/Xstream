@@ -436,3 +436,25 @@ jobs:
         with:
           name: obs-studio-windows-${{ matrix.architecture }}-${{ needs.check-event.outputs.commitHash }}
           path: ${{ github.workspace }}/build_${{ matrix.architecture }}/obs-studio-*-windows-${{ matrix.architecture }}.zip
+
+      # Pull requests do not run the packager. Zip the installed tree anyway so
+      # a fork PR still produces the Windows build (browser module included).
+      - name: Zip installed XStream build
+        if: ${{ !fromJSON(needs.check-event.outputs.package) }}
+        shell: pwsh
+        run: |
+          $install = "${{ github.workspace }}/build_${{ matrix.architecture }}/install"
+          if (-not (Test-Path "$install/bin/64bit/obs64.exe")) {
+            throw "Installed build is missing bin/64bit/obs64.exe"
+          }
+          if (-not (Test-Path "$install/core/obs-browser/obs-browser.dll")) {
+            throw "Installed build is missing core/obs-browser/obs-browser.dll"
+          }
+          & "$env:ProgramFiles\7-zip\7z.exe" a -tzip -mx=1 "${{ github.workspace }}/XStream-${{ needs.check-event.outputs.commitHash }}-windows-${{ matrix.architecture }}.zip" "$install\*"
+
+      - name: Upload installed XStream build
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ !fromJSON(needs.check-event.outputs.package) }}
+        with:
+          name: XStream-windows-${{ matrix.architecture }}-${{ needs.check-event.outputs.commitHash }}
+          path: ${{ github.workspace }}/XStream-*-windows-${{ matrix.architecture }}.zip

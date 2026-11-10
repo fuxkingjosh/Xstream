@@ -18,9 +18,8 @@ static const QString serverResponseHeader = QStringLiteral("HTTP/1.0 200 OK\n"
 							   "<html><head><title>XStream"
 							   "</title></head>");
 
-static const QString responseTemplate =
-	"<center><p style=\"font-family:verdana; font-size:16pt\">XStream</p></center>"
-	"<center><p style=\"font-family:verdana; font-size:13pt\">%1</p></center>";
+static const QString responseTemplate = "<center><p style=\"font-family:verdana; font-size:16pt\">XStream</p></center>"
+					"<center><p style=\"font-family:verdana; font-size:13pt\">%1</p></center>";
 
 AuthListener::AuthListener(QObject *parent) : QObject(parent)
 {

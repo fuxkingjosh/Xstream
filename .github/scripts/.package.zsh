@@ -110,7 +110,15 @@ package() {
   local commit_hash
 
   if [[ -d ${project_root}/.git ]] {
-    local git_description="$(git describe --tags --long)"
+    # Forks have no OBS version tags, so describe --tags --long fails.
+    # cmake/common/base-version.txt is the same fallback CMake uses.
+    local git_description=""
+    git_description="$(git describe --tags --long 2>/dev/null)" || git_description=""
+    if [[ ! ${git_description} =~ '^[0-9]+\.[0-9]+\.[0-9]+-' ]] {
+      local base_version="$(tr -d '[:space:]' < ${project_root}/cmake/common/base-version.txt)"
+      local sha="$(git rev-parse --short=9 HEAD)"
+      git_description="${base_version}-1-g${sha}"
+    }
     commit_version="${${git_description%-*}%-*}"
     commit_hash="${git_description##*-g}"
     commit_distance="${${git_description%-*}##*-}"
