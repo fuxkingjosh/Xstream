@@ -29,9 +29,20 @@ if(NOT DEFINED APPDATA_RELEASE_DATE)
       WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
       OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-  elseif(EXISTS "${CMAKE_SOURCE_DIR}/cmake/.CMakeBuildNumber")
+    # git log --tags prints nothing when the clone has no tags, which left the
+    # Flatpak metainfo release without a date.
+    if(NOT APPDATA_RELEASE_DATE)
+      execute_process(
+        COMMAND git log -1 --pretty=%cd --date=short
+        OUTPUT_VARIABLE APPDATA_RELEASE_DATE
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+      )
+    endif()
+  endif()
+  if(NOT APPDATA_RELEASE_DATE AND EXISTS "${CMAKE_SOURCE_DIR}/cmake/.CMakeBuildNumber")
     file(TIMESTAMP "${CMAKE_SOURCE_DIR}/cmake/.CMakeBuildNumber" APPDATA_RELEASE_DATE "%Y-%m-%d")
-  else()
+  elseif(NOT APPDATA_RELEASE_DATE)
     file(TIMESTAMP "${CMAKE_SOURCE_DIR}/CMakeLists.txt" APPDATA_RELEASE_DATE "%Y-%m-%d")
   endif()
 endif()
